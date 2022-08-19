@@ -3,12 +3,14 @@ const express = require('express');
 const app = express();
 const passport = require('passport')
 
+// adding config options
+app.use(express.json());
 
 // loading route modules
-const users = require('../routes/users')
+const user = require('../routes/user.route')
 
 
-app.use('/api/users', users)
+app.use('/api/user', user)
 
 
 

@@ -5,20 +5,20 @@ const tagSchema = require('./tag.schema')
 const userSchema = mongoose.Schema({
     firstName: {
         type: String,
-        minLength: 1,
-        maxLength: 50,
+        minLength: 3,
+        maxLength: 30,
         required: true
     },
     lastName: {
         type: String,
-        minLength: 1,
-        maxLength: 50,
+        minLength: 3,
+        maxLength: 30,
         required: true
     },
     jobTitle: {
         type: String,
         minLength: 3,
-        maxLength: 20,
+        maxLength: 60,
         required: true
     },
     company: {
@@ -48,7 +48,9 @@ const userSchema = mongoose.Schema({
     userIcon: {
         type: String,
         default: '#0F75E0',
-        required: true
+        required: true,
+        minLength: 7,
+        maxLength: 7,
 
     },
     dateCreated: {
