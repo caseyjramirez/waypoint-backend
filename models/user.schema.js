@@ -1,4 +1,6 @@
 const mongoose = require('mongoose')
+const taskShema = require('./task.schema')
+const tagSchema = require('./tag.schema')
 
 const userSchema = mongoose.Schema({
     firstName: {
@@ -42,7 +44,20 @@ const userSchema = mongoose.Schema({
         type: Boolean,
         default: false,
         required: false
-    }
+    },
+    userIcon: {
+        type: String,
+        default: '#0F75E0',
+        required: true
+
+    },
+    dateCreated: {
+        type: Date,
+        default: Date.now(),
+        required: true
+    },
+    tasks: [taskShema],
+    tags: [tagSchema]
 })
 
 const User = mongoose.model('User', userSchema)
