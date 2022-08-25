@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
     const body = req.body;
-
+    
     // checking if user exists
     let user = await User.findOne({email: body.email})
     if(user) return res.status(409).send(userAlreadyExists)

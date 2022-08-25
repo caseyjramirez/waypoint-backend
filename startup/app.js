@@ -5,6 +5,7 @@ const passport = require('passport')
 
 // adding config options
 app.use(express.json());
+app.use(cors())
 
 // loading route modules
 const user = require('../routes/user.route')
