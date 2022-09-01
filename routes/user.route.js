@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt')
+const passport = require('passport')
 const User = require('../models/user.schema');
 const validateNewUser = require('../validation/user.validation');
 const {badRequest, userAlreadyExists, success, internalServerError} = require('../messages/serverMessages');
@@ -24,7 +25,7 @@ router.post('/', async (req, res) => {
     // creating new user obj
     user = new User(body)
 
-    // hashing the pw
+    // hashing the pw (genPass)
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(user.password, salt);
 
@@ -37,5 +38,14 @@ router.post('/', async (req, res) => {
         res.status(500).send(internalServerError)
     }
 })
+
+// router.post('/login', passport.authenticate('local', { 
+//     failureRedirect: '/login-failure', 
+//     successRedirect: '/login-success' 
+// }));
+
+router.post('/login', passport.authenticate('local'), (req, res) => {
+    res.send(req.body)
+});
 
 module.exports = router
