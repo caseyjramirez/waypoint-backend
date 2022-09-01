@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt')
 const passport = require('passport')
 const User = require('../models/user.schema');
 const validateNewUser = require('../validation/user.validation');
+const auth = require('../middleware/auth')
 const {badRequest, userAlreadyExists, success, internalServerError} = require('../messages/serverMessages');
 
 router.get('/', async (req, res) => {
@@ -45,7 +46,12 @@ router.post('/', async (req, res) => {
 // }));
 
 router.post('/login', passport.authenticate('local'), (req, res) => {
-    res.send(req.body)
+    res.sendStatus(200)
+});
+
+router.post('/test', auth, (req, res) => {
+    console.log(req.session.passport.user);
+    res.send('hello')
 });
 
 module.exports = router

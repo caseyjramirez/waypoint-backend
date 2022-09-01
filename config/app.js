@@ -7,10 +7,15 @@ const cors = require('cors');
 const passport = require('passport')
 const mongoose_uri = process.env.ATLAS_URI;
 
+const corsOptions = {
+    origin: 'http://localhost:3000',  //Your Client, do not write '*'
+    credentials: true,
+};
+
 // adding config options
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
-app.use(cors())
+app.use(cors(corsOptions))
 
 
 app.use(session({
@@ -24,7 +29,7 @@ app.use(session({
     }),
     cookie: { 
         secure: false,
-        maxAge: 1000 * 60 // 1m
+        maxAge: 1000 * 60 * 60 * 24
     }
 }))
 
