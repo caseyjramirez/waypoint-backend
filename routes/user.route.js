@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt')
 const passport = require('passport')
+const _ = require("lodash");
 const User = require('../models/user.schema');
 const validateNewUser = require('../validation/user.validation');
 const auth = require('../middleware/auth')
@@ -32,6 +33,7 @@ router.post('/', async (req, res) => {
 
     try {
         user.save();
+        passport.authenticate('local')
         res.send(success)
     }
     catch (e) {
@@ -49,9 +51,10 @@ router.post('/login', passport.authenticate('local'), (req, res) => {
     res.sendStatus(200)
 });
 
-router.post('/test', auth, (req, res) => {
-    console.log(req.session.passport.user);
-    res.send('hello')
+router.get('/data', auth, async (req, res) => {
+    const user = await User.findById(req.session.passport.user)
+    const response = _.pick(user, ['firstName', 'lastName', 'jobTitle', 'company', 'email', 'userIcon', 'tasks', 'tags']);
+    res.send(response)
 });
 
 module.exports = router
