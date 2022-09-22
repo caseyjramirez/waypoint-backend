@@ -23,22 +23,22 @@ const taskShema = mongoose.Schema({
     title: {
         type: String,
         minLength: 3,
-        maxLength: 75,
+        maxLength: 30,
         required: true
     },
     description: {
         type: String,
-        minLength: 3,
-        maxLength: 400
+        required: false
     },
     comments: [commentSchema],
     status: {
         type: String,
         required: true,
-        default: "Waiting"
+        default: "ready"
     },
-    dueDate: {
+    due: {
         type: Date,
+        required: true
     },
     createdAt: {
         type: Date,

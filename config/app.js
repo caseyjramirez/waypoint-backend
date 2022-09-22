@@ -38,15 +38,14 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 
-// app.use((req, res, next) => {
-//     console.log('session: ', req.session);
-//     console.log('user: ', req.user);
-//     next();
-// })
-
-
 const user = require('../routes/user.route')
+const task = require('../routes/task.route')
+const auth = require('../middleware/auth')
+
 app.use('/api/user', user)
+
+app.use(auth)
+app.use('/api/task', task)
 
 
 

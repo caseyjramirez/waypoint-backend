@@ -52,6 +52,7 @@ router.post('/login', passport.authenticate('local'), (req, res) => {
 });
 
 router.get('/data', auth, async (req, res) => {
+    console.log(req.session.passport.user);
     const user = await User.findById(req.session.passport.user)
     const response = _.pick(user, ['firstName', 'lastName', 'jobTitle', 'company', 'email', 'userIcon', 'tasks', 'tags']);
     res.send(response)
