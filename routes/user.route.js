@@ -6,9 +6,10 @@ const _ = require("lodash");
 const User = require('../models/user.schema');
 const validateNewUser = require('../validation/user.validation');
 const auth = require('../middleware/auth')
+const dev = require('../middleware/development')
 const {badRequest, userAlreadyExists, success, internalServerError} = require('../messages/serverMessages');
 
-router.get('/', async (req, res) => {
+router.get('/all', dev, async (req, res) => {
     const users = await User.find()
     res.send(users)
 })
@@ -42,10 +43,7 @@ router.post('/', async (req, res) => {
     }
 })
 
-// router.post('/login', passport.authenticate('local', { 
-//     failureRedirect: '/login-failure', 
-//     successRedirect: '/login-success' 
-// }));
+
 
 router.post('/login', passport.authenticate('local'), (req, res) => {
     res.sendStatus(200)

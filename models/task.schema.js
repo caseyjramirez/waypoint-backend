@@ -45,7 +45,15 @@ const taskShema = mongoose.Schema({
         default: Date.now(),
         required: true
     },
-    tags: [tagSchema]
+    tags: [{ 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Tag' 
+    }],
+    isFavorite: {
+        type: Boolean,
+        required: true,
+        default: false
+    }
 })
 
 module.exports = taskShema
