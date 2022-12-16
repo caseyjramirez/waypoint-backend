@@ -56,6 +56,17 @@ router.patch('/change_status/:id', async (req, res) => {
     user.save()
 })
 
+router.patch('/change_favorite/:id', async (req, res) => {
+    const taskId = req.params.id;
+    const userId = req.session.passport.user;
+    
+    const user = await User.findById(userId)
+    let task = user.tasks.id(taskId)
+    
+    task.isFavorite = !task.isFavorite
+    user.save()
+})
+
 router.delete('/delete/:id', async (req, res) => {
     const taskId = req.params.id
     const userId = req.session.passport.user
